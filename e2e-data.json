@@ -66,6 +66,26 @@
     "tau10_failure": {
       "sha256": "46999da4669869a6c1dcda54f56c48c83831d6639b2d51d0400293382a1333e6",
       "artifact_name": "controller_failure_assessment.json"
+    },
+    "tau10_monitor": {
+      "artifact_name": "evaluation_monitor.json",
+      "sha256": "6a15af39cc0b8c94ed92ad07eff60a8d4d1d12de84a76302867ce17562bb77c7"
+    },
+    "tau10_eval": {
+      "artifact_name": "evaluation_verification.json",
+      "sha256": "9cb4fb6a08205eac2486a8e42ad28e6a14a07b8f1225118bc8f90fdc17643fb5"
+    },
+    "tau10_terminal": {
+      "artifact_name": "terminal_observation.json",
+      "sha256": "decabb94ad2edb36bcff9dc996a67f65e98e9b9c44d1923d97119c20816c2f55"
+    },
+    "tau10_source": {
+      "artifact_name": "live_source_verification.json",
+      "sha256": "f3cb9712052a2891d84529664ba4fa76a94ce2d7327a1ee7b000769814860a7c"
+    },
+    "tau10_training_audit": {
+      "artifact_name": "melt_tau_32x16_10step_1057648_training_audit_aggregate.json",
+      "sha256": "9845d6d601d2790fddb2d1e5570689d1f1f211b80f661cb0e2e99ad66eb26222"
     }
   },
   "g0": {
@@ -1623,6 +1643,136 @@
     "scope": "Same 100 frozen held-out tasks before/after; modest two-step warmup, one seed, no established learning conclusion."
   },
   "tau10": {
+    "xid": 1057648,
+    "required_updates": 10,
+    "completed_updates": 10,
+    "training_members": 5120,
+    "terminal_errors": 0,
+    "updates": [
+      {
+        "optimizer_update": 1,
+        "gradient_norm": 0.003489813534542918,
+        "learning_rate": 1e-05
+      },
+      {
+        "optimizer_update": 2,
+        "gradient_norm": 0.0029895405750721693,
+        "learning_rate": 2e-05
+      },
+      {
+        "optimizer_update": 3,
+        "gradient_norm": 0.003031013999134302,
+        "learning_rate": 3.0000000000000004e-05
+      },
+      {
+        "optimizer_update": 4,
+        "gradient_norm": 0.0029272232204675674,
+        "learning_rate": 4e-05
+      },
+      {
+        "optimizer_update": 5,
+        "gradient_norm": 0.002437292831018567,
+        "learning_rate": 5e-05
+      },
+      {
+        "optimizer_update": 6,
+        "gradient_norm": 0.0033421716652810574,
+        "learning_rate": 6.000000000000001e-05
+      },
+      {
+        "optimizer_update": 7,
+        "gradient_norm": 0.0032500894740223885,
+        "learning_rate": 7e-05
+      },
+      {
+        "optimizer_update": 8,
+        "gradient_norm": 0.004167590290307999,
+        "learning_rate": 8e-05
+      },
+      {
+        "optimizer_update": 9,
+        "gradient_norm": 0.003732056822627783,
+        "learning_rate": 9e-05
+      },
+      {
+        "optimizer_update": 10,
+        "gradient_norm": 0.005363277159631252,
+        "learning_rate": 0.0001
+      }
+    ],
+    "evaluation": [
+      {
+        "policy_step": 0,
+        "n": 100,
+        "mean_reward": 0.31,
+        "strict_successes": 23
+      },
+      {
+        "policy_step": 5,
+        "n": 100,
+        "mean_reward": 0.38,
+        "strict_successes": 32
+      },
+      {
+        "policy_step": 10,
+        "n": 100,
+        "mean_reward": 0.43,
+        "strict_successes": 38
+      }
+    ],
+    "paired_comparisons": {
+      "0->10": {
+        "mean_reward_change": 0.12,
+        "improved": 23,
+        "unchanged": 68,
+        "worsened": 9
+      },
+      "0->5": {
+        "mean_reward_change": 0.07,
+        "improved": 13,
+        "unchanged": 82,
+        "worsened": 5
+      },
+      "5->10": {
+        "mean_reward_change": 0.05,
+        "improved": 19,
+        "unchanged": 69,
+        "worsened": 12
+      }
+    },
+    "trajectory_source": "43329a6a5fd8580ab961003339def1ecf45f206d",
+    "checkpoint_completion_fix": "Trajectory PR #6490; GPU runtime and experiment recipe unchanged",
+    "checkpoint_policies": [
+      0,
+      5,
+      10
+    ],
+    "runner_exit_code": 0,
+    "strict_training_audit_passed": true,
+    "strict_evaluation_passed": true,
+    "scope": "Fresh completed run, separate from failed attempt 1057459. Strict paired evaluation passed on the same 100 frozen heldout tasks. Single-run descriptive evidence; full MELT sign-off and current-head GPU CI remain separate."
+  },
+  "global_caveats": [
+    "Existing native integration evidence, not a new test run or current-head GPU CI.",
+    "All metrics bind tested Bridge7cd9a887/SkyRL99bf425d/image d3978d1d; later review heads are not GPU-qualified.",
+    "Old FSDP, failed TP1 G2, warm saturated G3, and pre-entropy-fix attempts are excluded.",
+    "Full MELT sign-off remains separate from the completed Tau10 run. Tool-domain events are separate from canonical terminal errors.",
+    "No prompts, token IDs, task UIDs, model IDs, pod/node identities, internal IPs, credentials, or secret payloads are exported."
+  ],
+  "field_provenance": {
+    "g1.update_scatter": "g1_raw stages[pre_update_scores|post_update_scores].details.response_logprobs; delta=post-pre in existing response order",
+    "g1.updates": "g1_strict updates",
+    "g1.comparisons": "g1_strict comparisons",
+    "g2.ranks": "g2_memory allocator_peaks.ranks",
+    "tau2.updates": "tau2_mechanics optimizer_metrics",
+    "tau2.evaluation": "tau2_eval policies",
+    "tau2.paired_rewards": "tau2_eval paired_rewards baseline/final; UID omitted",
+    "tau10.updates": "tau10_monitor training_steps metrics: optim/skyrl.ai/grad_norm and optim/skyrl.ai/learning_rate; step+1",
+    "tau10_failed_attempt.updates": "tau10_partial per_step",
+    "tau10.evaluation": "tau10_eval policies, sorted policy 0/5/10",
+    "tau10.paired_comparisons": "tau10_eval paired_comparisons; task identifiers and individual outcomes omitted"
+  },
+  "tau10_failed_attempt": {
     "xid": 1057459,
     "passed": false,
     "required_updates": 10,
@@ -1674,22 +1824,5 @@
     },
     "failure": "Checkpoint5 ENOSPC; later committed index invalid because checkpoint archive absent. Cancelled and zero task GPU/RDMA resources verified.",
     "scope": "Five completed updates only. Do not interpolate updates6-10 or draw a final evaluation/learning curve. Checkpoint0 preserved; full Tau10/MELT incomplete."
-  },
-  "global_caveats": [
-    "Existing native integration evidence, not a new test run or current-head GPU CI.",
-    "All metrics bind tested Bridge7cd9a887/SkyRL99bf425d/image d3978d1d; later review heads are not GPU-qualified.",
-    "Old FSDP, failed TP1 G2, warm saturated G3, and pre-entropy-fix attempts are excluded.",
-    "Full MELT is incomplete. Tool-domain events are separate from canonical terminal errors.",
-    "No prompts, token IDs, task UIDs, model IDs, pod/node identities, internal IPs, credentials, or secret payloads are exported."
-  ],
-  "field_provenance": {
-    "g1.update_scatter": "g1_raw stages[pre_update_scores|post_update_scores].details.response_logprobs; delta=post-pre in existing response order",
-    "g1.updates": "g1_strict updates",
-    "g1.comparisons": "g1_strict comparisons",
-    "g2.ranks": "g2_memory allocator_peaks.ranks",
-    "tau2.updates": "tau2_mechanics optimizer_metrics",
-    "tau2.evaluation": "tau2_eval policies",
-    "tau2.paired_rewards": "tau2_eval paired_rewards baseline/final; UID omitted",
-    "tau10.updates": "tau10_partial per_step"
   }
 }

@@ -214,7 +214,7 @@ def native_qualification():
     ax = axs[1, 0]
     for key, label, color in [
         ("tau2", "Tau2: 2/2 updates", BLUE),
-        ("tau10", "Tau10: 5/10 updates", ORANGE),
+        ("tau10", "Tau10: 10/10 updates", ORANGE),
     ]:
         rows = data[key]["updates"]
         assert all(
@@ -228,16 +228,6 @@ def native_qualification():
             label=label,
             markersize=5,
         )
-    ax.axvspan(5.5, 10.5, color="#f3f4f6")
-    ax.text(
-        0.72,
-        0.47,
-        "Tau10 incomplete\nCheckpoint 5: ENOSPC\nNo updates 6–10",
-        transform=ax.transAxes,
-        ha="center",
-        fontsize=9,
-        color="#984a16",
-    )
     ax.set(
         yscale="log",
         xticks=range(1, 11),
@@ -246,12 +236,13 @@ def native_qualification():
         ylabel="Gradient norm (log scale)",
         title="C  Native training updates · separate runs",
     )
-    ax.legend(fontsize=8, loc="upper right")
+    ax.legend(fontsize=8, loc="upper left")
 
     ax = axs[1, 1]
-    rows = data["tau2"]["evaluation"]
-    assert len(rows) == 2 and all(r["n"] == 100 for r in rows)
-    x = np.arange(2)
+    rows = data["tau10"]["evaluation"]
+    assert [r["policy_step"] for r in rows] == [0, 5, 10]
+    assert all(r["n"] == 100 for r in rows)
+    x = np.arange(len(rows))
     for offset, values, color, label in [
         (-0.19, [r["mean_reward"] for r in rows], BLUE, "Mean reward"),
         (
@@ -273,7 +264,7 @@ def native_qualification():
         xticklabels=[f"Policy step {r['policy_step']}" for r in rows],
         ylim=(0, 1),
         ylabel="Score / fraction",
-        title="D  Tau2 heldout evaluation · same 100 tasks",
+        title="D  Tau10 heldout evaluation · same 100 tasks",
     )
     ax.legend(fontsize=8, loc="upper right")
     ax.text(
@@ -290,8 +281,8 @@ def native_qualification():
         "native-qualification.png",
         "Inkling-Small · recorded native qualification",
         "276B total / 12B active · 16 H200s · Bridge 7cd9a887 / SkyRL 99bf425d · integration evidence",
-        "G1: 1057142   ·   G2: 1057146   ·   Tau2: 1057417   ·   Tau10: 1057459\n"
-        "Recorded runs, not a rerun of cleanup head f2e39f10. Memory is allocator usage; Tau10 has no final evaluation.",
+        "G1: 1057142   ·   G2: 1057146   ·   Tau2: 1057417   ·   Tau10: 1057648\n"
+        "Recorded runs, not a rerun of cleanup head f2e39f10. Memory is allocator usage; full MELT sign-off remains separate.",
     )
 
 

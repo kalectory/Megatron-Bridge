@@ -60,9 +60,19 @@ They were not rerun on cleanup head `f2e39f10`.
   and the same 100 heldout tasks at policies 0 and 2. Mean reward 0.305 to 0.335
   and strict successes 22 to 25 are descriptive single-run results. There were
   13 improved, 78 unchanged and nine worsened task rewards.
-- **Tau10, XID 1057459:** five of ten updates completed, with 2,560 clean trained
-  trajectories. Checkpoint 5 failed with ENOSPC. No final paired evaluation
-  exists, and the plot does not interpolate the missing updates.
+- **Tau10, XID 1057648:** ten of ten updates completed, with 5,120 trained
+  trajectories and zero terminal errors. The same 100 heldout tasks at policies
+  0, 5 and 10 had mean rewards **0.31 / 0.38 / 0.43** and strict successes
+  **23 / 32 / 38 out of 100**. From policy 0 to 10, task rewards improved on 23,
+  were unchanged on 68 and worsened on nine. These are descriptive single-run
+  results. Checkpoints 0, 5 and 10 committed; the runner exited successfully.
+  This fresh run used the same GPU runtime, plus the merged CPU checkpoint
+  completion check in Trajectory PR #6490 (source `43329a6a`). Full MELT
+  sign-off and maintainer GPU CI remain separate.
+- **Prior Tau10 attempt, XID 1057459:** stopped after five of ten updates when
+  checkpoint 5 failed with ENOSPC. Its recorded data remain in
+  `tau10_failed_attempt` in the JSON; its updates are not combined with the
+  completed fresh run.
 
 Pass/fail checks, skipped CUDA tests and remaining qualification gates are
 listed separately in the PR rather than converted into a combined pass rate.
