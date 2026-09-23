@@ -1196,7 +1196,7 @@
       "tool_failure_count": 0,
       "finite_native_numeric_metrics": 187
     },
-    "scope": "Cold canonical GSM8K 32x16 one-step mechanics/nonzero-signal gate; not held-out learning improvement. Warm saturated G3 excluded."
+    "scope": "Cold canonical GSM8K 32x16 single-update training with nonzero learning signal; not held-out learning improvement. The earlier saturated GSM8K run is excluded."
   },
   "tau2": {
     "xid": 1057417,
@@ -1750,13 +1750,13 @@
     "runner_exit_code": 0,
     "strict_training_audit_passed": true,
     "strict_evaluation_passed": true,
-    "scope": "Fresh completed run, separate from failed attempt 1057459. Strict paired evaluation passed on the same 100 frozen heldout tasks. Single-run descriptive evidence; full MELT sign-off and current-head GPU CI remain separate."
+    "scope": "Fresh completed run, separate from failed attempt 1057459. Strict paired evaluation passed on the same 100 frozen heldout tasks. Single-run descriptive evidence; current-head GPU CI remains pending."
   },
   "global_caveats": [
     "Existing native integration evidence, not a new test run or current-head GPU CI.",
-    "All metrics bind tested Bridge7cd9a887/SkyRL99bf425d/image d3978d1d; later review heads are not GPU-qualified.",
-    "Old FSDP, failed TP1 G2, warm saturated G3, and pre-entropy-fix attempts are excluded.",
-    "Full MELT sign-off remains separate from the completed Tau10 run. Tool-domain events are separate from canonical terminal errors.",
+    "All metrics bind tested Bridge7cd9a887/SkyRL99bf425d/image d3978d1d; later review heads were not rerun on GPUs.",
+    "Old FSDP, failed TP1 long-context capacity, saturated GSM8K, and pre-entropy-fix attempts are excluded.",
+    "Tool-domain events are separate from canonical terminal errors.",
     "No prompts, token IDs, task UIDs, model IDs, pod/node identities, internal IPs, credentials, or secret payloads are exported."
   ],
   "field_provenance": {
@@ -1823,6 +1823,6 @@
       "strict_successes": 27
     },
     "failure": "Checkpoint5 ENOSPC; later committed index invalid because checkpoint archive absent. Cancelled and zero task GPU/RDMA resources verified.",
-    "scope": "Five completed updates only. Do not interpolate updates6-10 or draw a final evaluation/learning curve. Checkpoint0 preserved; full Tau10/MELT incomplete."
+    "scope": "Five completed updates only. Do not interpolate updates6-10 or draw a final evaluation/learning curve. Checkpoint0 preserved; the requested ten-update run was incomplete."
   }
 }

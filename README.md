@@ -1,8 +1,7 @@
 # Inkling test evidence for Megatron-Bridge #6170
 
-These figures summarize recorded test artifacts. They do not run new tests or
-establish a complete MELT pass. The evidence branch is separate from the
-[implementation PR](https://github.com/NVIDIA-NeMo/Megatron-Bridge/pull/6170).
+These figures summarize recorded test artifacts. The evidence branch is separate
+from the [implementation PR](https://github.com/NVIDIA-NeMo/Megatron-Bridge/pull/6170).
 
 ## Reproduce the figures
 
@@ -28,8 +27,8 @@ The BF16 fixture has two random-weight text layers, hidden size 512, and a
 positions: 113 positions and 13,560 vocabulary comparisons per variant.
 Base and nonzero attention-LoRA results are compared with stock vLLM. The
 adapter stimulus is deterministic; this diagnostic does not train the adapter.
-Signed target-token errors, full-vocabulary maximum errors and adapter-effect
-agreement are different measurements. Absolute differences are diagnostic, not
+The panels show maximum errors across the 120 scored vocabulary entries and
+target-token adapter-effect agreement. Absolute differences are diagnostic, not
 an invented acceptance threshold. This fixture does not establish parity of
 the published 276B checkpoint.
 
@@ -46,14 +45,16 @@ receipt records fixture and script hashes but no independent model-source hash.
 Inkling-Small has 276B total / 12B active parameters. These runs used 16 H200s
 (eight learner, eight sampler), Bridge `7cd9a887`, SkyRL `99bf425d` and the
 frozen runtime identified by full digests in [e2e-data.json](e2e-data.json).
-They were not rerun on cleanup head `f2e39f10`.
+They were not rerun on cleanup head `f2e39f10`. The figure shows update agreement
+and Tau10 heldout evaluation; the JSON also retains the capacity and two-update
+results below.
 
-- **G1, XID 1057142:** 433 matched response positions across three prompts.
-  The plotted change uses a diagnostic learning rate of 0.01. Restore was
+- **Update and restore agreement, XID 1057142:** 433 matched response positions
+  across three prompts. The plotted change uses a diagnostic learning rate of 0.01. Restore was
   checked against frozen tolerances, not bit-exact trainer scores.
-- **G2, XID 1057146:** one sequence with 32,768 supervised positions and two
-  retained backwards. Memory bars show learner allocator peaks across the
-  profiled operation window; they are neither sampler memory nor physical
+- **Long-context capacity, XID 1057146:** one sequence with 32,768 supervised
+  positions and two retained backwards. Recorded learner allocator peaks cover
+  the profiled operation window; they are neither sampler memory nor physical
   device high-water marks. Capacity minus reservation is not measured free
   memory. This check does not establish packed-batch capacity.
 - **Tau2, XID 1057417:** two completed updates, 1,024 clean trained trajectories,
@@ -67,12 +68,12 @@ They were not rerun on cleanup head `f2e39f10`.
   were unchanged on 68 and worsened on nine. These are descriptive single-run
   results. Checkpoints 0, 5 and 10 committed; the runner exited successfully.
   This fresh run used the same GPU runtime, plus the merged CPU checkpoint
-  completion check in Trajectory PR #6490 (source `43329a6a`). Full MELT
-  sign-off and maintainer GPU CI remain separate.
+  completion check in Trajectory PR #6490 (source `43329a6a`). Maintainer GPU CI
+  on the current implementation head remains pending.
 - **Prior Tau10 attempt, XID 1057459:** stopped after five of ten updates when
   checkpoint 5 failed with ENOSPC. Its recorded data remain in
   `tau10_failed_attempt` in the JSON; its updates are not combined with the
   completed fresh run.
 
-Pass/fail checks, skipped CUDA tests and remaining qualification gates are
-listed separately in the PR rather than converted into a combined pass rate.
+Pass/fail checks, skipped CUDA tests and unverified capabilities are listed
+separately in the PR rather than converted into a combined pass rate.
